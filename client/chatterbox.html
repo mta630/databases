@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/c57fca7a66.js" crossorigin="anonymous"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/underscore/underscore.js"></script>
+    <script src="node_modules/jquery/dist/jquery.timeago.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Flamenco&display=swap" rel="stylesheet">
+    <script>jQuery(document).ready(function() {
+      jQuery("time.timeago").timeago();
+    });</script>
+    <script>$(document).ready(testFunction = function (userName) {Friends.befriend(userName)})
+    window.setInterval(function(){App.renderMessages()}, 5000);</script>
+    <script>
+      // DO NOT MODIFY THIS CODE
+      if (!/(&|\?)username=/.test(window.location.search)) {
+        var search = window.location.search;
+        if (!/\?/.test(search)) {
+          search += '?';
+        }
+        if (search[search.length - 1] !== '?') {
+          search += '&';
+        }
+        search += 'username=' + (prompt('What is your name?') || 'anonymous');
+        window.location.search = search;
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
+    </style>
+
+  </head>
+  <body>
+    <div id="main">
+      <div id="title">
+        <h1><i class="fas fa-headset"></i>chatterbox.</h1>
+      </div>
+      </div>
+    </div>
+
+    <div class="rooms">
+        <select type="roomSelect" id="roomSelect"><option value="choose-room" selected>Choose Room<i class="fas fa-caret-down"></i></option></select>
+    </div>
+    <div class="form-input">
+      <form action="#" id="new-room" method="post">
+        <input type="text" name="new-room" class="new-room" id="new-room-id">
+        <button class="add-room-button">Add Room</button>
+      </form>
+    </div>
+    <div class="room-header">
+      <p id="room-title"><span id="currentRoom">You are currently in room:</span> <span id="room-title-animate">HRR45</span></p>
+    </div>
+    <div id="chats"><div class="spinner"><img src="./images/spiffygif_46x46.gif"></div></div>
+    <form action="#" id="send" method="post">
+        <input type="text" name="message" id="message"/>
+        <input type="submit" name="submit" class="submit"/>
+    </form>
+    <script src="./env/config.js"></script>
+    <script src="./scripts/parse.js"></script>
+    <script src="./scripts/rooms.js"></script>
+    <script src="./scripts/friends.js"></script>
+    <script src="./scripts/messages.js"></script>
+    <script src="./scripts/formView.js"></script>
+    <script src="./scripts/roomsView.js"></script>
+    <script src="./scripts/messageView.js"></script>
+    <script src="./scripts/messagesView.js"></script>
+    <script src="./scripts/app.js"></script>
+    <script>
+      $(() => App.initialize());
+    </script>
+  </body>
+</html>
