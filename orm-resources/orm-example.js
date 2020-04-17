@@ -2,9 +2,10 @@
  *   npm install sequelize
  * before running this example. Documentation is at http://sequelizejs.com/
  */
+require('dotenv').config();
 
 var Sequelize = require('sequelize');
-var db = new Sequelize('chatter', 'root', '');
+var db = new Sequelize('chat', 'mta630', process.env.password);
 /* TODO this constructor takes the database name, username, then password.
  * Modify the arguments if you need to */
 
@@ -16,8 +17,8 @@ var User = db.define('User', {
 
 var Message = db.define('Message', {
   userid: Sequelize.INTEGER,
-  text: Sequelize.STRING,
-  roomname: Sequelize.STRING
+  message_text: Sequelize.STRING,
+  room_name: Sequelize.STRING
 });
 
 /* Sequelize comes with built in support for promises

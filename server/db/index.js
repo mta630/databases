@@ -1,24 +1,33 @@
 var mysql = require('mysql');
-require('dotenv').config()
+require('dotenv').config();
+var Sequelize = require('sequelize');
+var orm = new Sequelize('chat', 'mta630', process.env.password, {
+  dialect: 'mysql'
+});
 
 // Create a database connection and export it from this file.
-// You will need to connect with the user "root", no password,
+// You will need to connect with the Users "root", no password,
 // and to the database "chat".
 
 
-var dbConnection = mysql.createConnection({
-  host: 'localhost',
-  user: 'mta630',
-  password: process.env.password,
-  database: 'chat'
-});
-
-dbConnection.connect((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Connected successfully!')
-  }
+var Users = orm.define('Users', {
+  user_name : Sequelize.STRING
 })
 
-module.exports = dbConnection;
+var Messages = orm.define('Messages', {
+  user_id : Sequelize.INTEGER,
+  room_name: Sequelize.STRING,
+  message_text: Sequelize.STRING,
+  created_at: Sequelize.STRING
+})
+
+
+
+Messages.belongsTo('Users');
+Users.hasMany('Messages');
+
+Users.sync();
+Messages.sync();
+
+exports.Users = Users;
+exports.Messages = Messages;

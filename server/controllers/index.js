@@ -1,43 +1,47 @@
-var models = require('../models');
+var orm = require('../db');
 
 module.exports = {
   messages: {
     get: function (req, res) {
-      models.messages.get((err, data) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log("THIS IS THE THING ", JSON.stringify(data[0]));
-        res.json(data);
+      Message.findAll({include: [User]})
+      .then((err, results) => {
+        res.json(results);
       })
     },
     post: function (req, res) {
-      models.messages.post(req.body, (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-        res.sendStatus(201);
-      });
-    } // a function which handles posting a message to the database
+      User.findOrCreate({user_name: req.body.user_name})
+      .then((err, user) => {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
+        var params = {
+          user_name: user.id,
+          room_name: req.body.room_name,
+          created_at: dateTime,
+          message_text: req.body.message_text
+        };
+        Message.create(params)
+        .then((err, results) => {
+          res.sendStatus(201)
+        })
+      })
   },
 
   users: {
     // Ditto as above
     get: function (req, res) {
-      models.users.get((err, data) => {
-        if (err) {
-          console.log(err)
-        }
-        res.json(data);
-      })
+      User.findAll()
+        .then(function (err, results) {
+          res.json(results);
+        });
     },
     post: function (req, res) {
-      models.users.post(req.body, (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-        res.sendStatus(201);
-      })
+      User.create({user_name: req.body.user_name})
+        .then(function(err, user) {
+          res.sendStatus(201);
+        });
     }
   }
 };
